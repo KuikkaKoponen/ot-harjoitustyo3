@@ -1,5 +1,6 @@
 const notesRouter = require('express').Router() // luodaan Router olio
 const Note = require('../models/note')  // Voisi olla myös blog nimellä
+const listHelper = require('./utils/list_helper')  //  Eristetään apufunktiot omaan moduliinsa
 
 notesRouter.get('/', (request, response) => {
   Note.find({}).then(notes => {
