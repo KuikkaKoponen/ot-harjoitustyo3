@@ -7,16 +7,14 @@ const helper = require('./test_helper')
 
 
 // Tietokanta tyhjennetään aluksi ja sen jälkeen kantaan lisätään kaksi taulukkoon initialNotes talletettua muistiinpanoa. Näin testien suoritus aloitetaan aina hallitusti samasta tilasta.
+// tää kandee vielä kattoo. JATKA TÄSTÄ
 beforeEach(async () => {
-// Jotta asynkronisia operaatioita voi kutsua awaitin avulla, niiden täytyy palauttaa promiseja ja täytyy olla async-funktiossa
-  // alla olevat jäi vähän epäselviksi miten toimii
   await Note.deleteMany({})
 
-  let noteObject = new Note(helper.initialNotes[0])
-  await noteObject.save()
-
-  noteObject = new Note(helper.initialNotes[1])
-  await noteObject.save()
+  const noteObjects = helper.initialNotes
+    .map(note => new Note(note))
+  const promiseArray = noteObjects.map(note => note.save())
+  await Promise.all(promiseArray)
 })
 
 // Huomioi, että alla olevat testit ovat toteutettu kahdella eri tavalla
