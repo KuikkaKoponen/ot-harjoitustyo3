@@ -1,5 +1,6 @@
 const config = require('./utils/config')  // Ympäristömuuttujien käsittely on eriytetty tänne
 const express = require('express')
+require('express-async-errors')  // tämän tuoman magian avulla ei tarvita try catch lauseita
 const app = express()
 const cors = require('cors')  // Liittyi käytettyihin eri portteihin
 const notesRouter = require('./controllers/notes')  // kaikki muistiinpanoihin liittyvien reittien määrittelyt on tänne

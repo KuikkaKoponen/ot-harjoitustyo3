@@ -1,7 +1,10 @@
-// testattu ja toimii
+// testattu ja toimii, palauttaa aina 1
 const dummy = (blogs) => {
-  return 1
+  if (blogs.length >= 0) {
+    return 1
+  } else return 1
 }
+
 
 // testattu ja toimii
 const totalLikes = (blogs) => {
@@ -59,8 +62,8 @@ const mostBlogs = (blogs) => {
     ? {}
     : blogs.reduce(reducer, []).reduce(reducer2, {}) // eka käydään lista läpi ja tehää {author, blogs}, sen jälkeen katotaan kenellä eniten blogeja
 }
+// testattu ja toimii
 const mostLikes = (blogs) => {
-
   const reducer = (list, item) => {
     const index = list.findIndex(x => x.author === item.author)
     if (index > -1) {

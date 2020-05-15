@@ -1,3 +1,5 @@
+// Index.js rooliksi jäi sovelluksen käynnistäminen määriteltyyn porttiin Noden http-olion avulla:
+
 const app = require('./app') // varsinainen Express-sovellus
 const http = require('http')
 const config = require('./utils/config')
