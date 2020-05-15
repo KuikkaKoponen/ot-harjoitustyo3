@@ -20,12 +20,16 @@ notesRouter.get('/:id', async (request, response, next) => {
 // toimii
 notesRouter.post('/', async (request, response, next) => {
   const body = request.body
-
+  let likes = 0
+  // tää kaatuu ku jos ei likes määritelty
+  if (Object.prototype.hasOwnProperty.call(body, 'likes') && body.likes.length > 0 ) {
+    likes = body.likes
+  }
   const note = new Note({
     title: body.title,
     author: body.author,
     url: body.url,
-    likes: body.likes,
+    likes: likes,
   })
 
   const savedNote = await note.save()
