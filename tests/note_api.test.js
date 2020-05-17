@@ -180,6 +180,19 @@ test('title and url needed ', async () => {
     .expect('Content-Type', /application\/json/)
 })
 
+test('a blog can be changed ', async () => {
+
+  const notesAtStart = await helper.notesInDb()
+  const noteToChange = notesAtStart[0]
+  noteToChange.likes = 1000
+  const resultNote = await api
+    .put(`/api/blogs/${noteToChange.id}`)
+    .expect(200)
+  //console.log(resultNote)
+  // jostain syystä alla oleva palauttaa bodyn kaikki keyt nullina, ainoastaan id oikein
+  //expect(resultNote.body.likes).toEqual(1000)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })

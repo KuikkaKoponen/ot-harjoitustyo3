@@ -21,7 +21,7 @@ notesRouter.get('/:id', async (request, response, next) => {
 notesRouter.post('/', async (request, response, next) => {
   const body = request.body
   let likes = 0
-  // tää kaatuu ku jos ei likes määritelty
+
   if (Object.prototype.hasOwnProperty.call(body, 'likes') && body.likes.length > 0 ) {
     likes = body.likes
   }
@@ -44,7 +44,7 @@ notesRouter.delete('/:id', async (request, response, next) => {
 })
 
 // ei korjattu
-notesRouter.put('/:id', (request, response, next) => {
+notesRouter.put('/:id', async (request, response, next) => {
   const body = request.body
 
   const note = {
@@ -53,12 +53,8 @@ notesRouter.put('/:id', (request, response, next) => {
     url: body.url,
     likes: body.likes,
   }
-
-  Note.findByIdAndUpdate(request.params.id, note, { new: true })
-    .then(updatedNote => {
-      response.json(updatedNote.toJSON())
-    })
-    .catch(error => next(error))
+  const resp = await Note.findByIdAndUpdate(request.params.id, note, { new: true })
+  response.json(resp.toJSON())
 })
 
 module.exports = notesRouter
