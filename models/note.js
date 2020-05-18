@@ -22,6 +22,11 @@ const noteSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    // Mongoosen populate-funktion toiminnallisuus perustuu siihen, että olemme määritelleet viitteiden "tyypit" olioiden Mongoose-skeemaan ref-kentän avulla
+    ref: 'User'
+  }
 })
 
 
@@ -33,4 +38,5 @@ noteSchema.set('toJSON', {
   }
 })
 
+// tässä määritetellään et menee mongooseen Note taulukkoon
 module.exports = mongoose.model('Note', noteSchema)

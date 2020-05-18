@@ -7,6 +7,8 @@ const notesRouter = require('./controllers/notes')  // kaikki muistiinpanoihin l
 const middleware = require('./utils/middleware')  // Itse toteutettujen middlewarejen määritelty on siirretty tänne
 const logger = require('./utils/logger')  //  Eristetään kaikki konsoliin tulostelu omaan moduliinsa
 const mongoose = require('mongoose')  // MongoDB
+const usersRouter = require('./controllers/users') // Hoitaa user routet
+const loginRouter = require('./controllers/login') // login
 
 logger.info('connecting to', config.MONGODB_URI)
 
@@ -22,10 +24,13 @@ app.use(cors())
 app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
-
+app.use(middleware.tokenExtractor)
 app.use('/api/blogs', notesRouter) // Näin määrittelemäämme routeria käytetään jos polun alkuosa on /api/blogs.
-
+app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
+
+
 
 module.exports = app
